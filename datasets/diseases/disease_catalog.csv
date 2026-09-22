@@ -1,0 +1,12 @@
+disease_id,disease_name,category,source,source_url,data_year,metric,age_relevance,sex_relevance,risk_factors_available,geographic_resolution,clinical_module_status
+malaria,Malaria,Communicable,WHO World Malaria Report,https://www.who.int/publications/i/item/9789240064898,2022,27% of global cases,All,All,Yes,National,IMPLEMENTED
+lri,Lower Respiratory Infections,Communicable,IHME GBD Nigeria,https://www.healthdata.org/nigeria,2019,Leading cause of death,Under-5,All,Yes,National,DATA_ONLY
+neonatal,Neonatal Disorders,Maternal/Neonatal,NDHS 2018,https://dhsprogram.com/pubs/pdf/FR359/FR359.pdf,2018,39 per 1000 live births,Neonatal,All,Yes,State,DATA_ONLY
+hiv,HIV/AIDS,Communicable,UNAIDS Nigeria,https://www.unaids.org/en/regionscountries/countries/nigeria,2022,1.3% prevalence,Adults,Higher in females,Yes,State,DATA_ONLY
+diarrhea,Diarrheal Diseases,Communicable,NDHS 2018,https://dhsprogram.com/pubs/pdf/FR359/FR359.pdf,2018,13% of under-5s,Under-5,All,Yes,State,DATA_ONLY
+tb,Tuberculosis,Communicable,WHO Global TB Report,https://www.who.int/teams/global-tuberculosis-programme/tb-reports,2022,219 per 100000,All,All,Yes,National,DATA_ONLY
+stroke,Stroke,Non-communicable,IHME GBD Nigeria,https://www.healthdata.org/nigeria,2019,Top 5 cause of death,Adults/Elderly,All,Yes,National,FUNCTIONAL
+ihd,Ischemic Heart Disease,Non-communicable,IHME GBD Nigeria,https://www.healthdata.org/nigeria,2019,Rising burden,Adults/Elderly,All,Yes,National,FUNCTIONAL
+meningitis,Meningitis,Communicable,NCDC,https://ncdc.gov.ng/diseases/factsheet/51,2023,Epidemic prone,All,All,Yes,State,DATA_ONLY
+scd,Sickle Cell Disease,Genetic,WHO Regional Office for Africa,https://www.afro.who.int/health-topics/sickle-cell-disease,2022,2% of births,All,All,Yes,National,DATA_ONLY
+Sickle Cell Disease,FUNCTIONAL

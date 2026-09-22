@@ -1,0 +1,279 @@
+{
+  "name": "Malaria",
+  "remarks": [
+    "Evidence-backed Nigerian Malaria Module.",
+    "Incidence sourced from WHO World Malaria Report 2022 (~314 per 1000 annually).",
+    "Modelled as a recurrent condition. Incidence is stratified by Age (U5 higher risk)."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Evaluation"
+    },
+    "Annual_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.5,
+              "transition": "Malaria_Incubation"
+            },
+            {
+              "distribution": 0.5,
+              "transition": "Annual_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": ">=",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.25,
+              "transition": "Malaria_Incubation"
+            },
+            {
+              "distribution": 0.75,
+              "transition": "Annual_Evaluation"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Annual_Evaluation"
+    },
+    "Malaria_Incubation": {
+      "type": "Delay",
+      "range": {
+        "low": 7,
+        "high": 14,
+        "unit": "days"
+      },
+      "direct_transition": "Malaria_Onset"
+    },
+    "Malaria_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "61462000",
+          "display": "Malaria"
+        }
+      ],
+      "direct_transition": "Malaria_Fever"
+    },
+    "Malaria_Fever": {
+      "type": "Symptom",
+      "symptom": "Fever",
+      "probability": 1.0,
+      "direct_transition": "Care_Seeking_Decision"
+    },
+    "Malaria_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up (procedure)"
+        }
+      ],
+      "direct_transition": "Observe_Temperature"
+    },
+    "Malaria_RDT": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "16738-7",
+          "display": "Plasmodium sp. identified in Blood by Light microscopy"
+        }
+      ],
+      "exact": {
+        "quantity": 1
+      },
+      "direct_transition": "Malaria_Treatment"
+    },
+    "Malaria_Treatment": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1649558",
+          "display": "Artemether / Lumefantrine"
+        }
+      ],
+      "direct_transition": "Treatment_Delay"
+    },
+    "Treatment_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 3,
+        "high": 7,
+        "unit": "days"
+      },
+      "direct_transition": "Outcome_Evaluation"
+    },
+    "Outcome_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.005,
+              "transition": "Malaria_Death"
+            },
+            {
+              "distribution": 0.995,
+              "transition": "Malaria_Cured"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": ">=",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.001,
+              "transition": "Malaria_Death"
+            },
+            {
+              "distribution": 0.999,
+              "transition": "Malaria_Cured"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Malaria_Cured"
+    },
+    "Malaria_Cured": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "61462000",
+          "display": "Malaria"
+        }
+      ],
+      "direct_transition": "Medication_End"
+    },
+    "Medication_End": {
+      "type": "MedicationEnd",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1649558",
+          "display": "Artemether / Lumefantrine"
+        }
+      ],
+      "direct_transition": "Annual_Evaluation"
+    },
+    "Malaria_Death": {
+      "type": "Death",
+      "condition_onset": "Malaria",
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    },
+    "Care_Seeking_Decision": {
+      "type": "Simple",
+      "distributions": [
+        {
+          "distribution": 0.5,
+          "transition": "Prompt_Care"
+        },
+        {
+          "distribution": 0.25,
+          "transition": "Delayed_Care_Short"
+        },
+        {
+          "distribution": 0.25,
+          "transition": "Delayed_Care_Long"
+        }
+      ]
+    },
+    "Prompt_Care": {
+      "type": "Delay",
+      "range": {
+        "low": 0,
+        "high": 1,
+        "unit": "days"
+      },
+      "direct_transition": "Malaria_Encounter"
+    },
+    "Delayed_Care_Short": {
+      "type": "Delay",
+      "range": {
+        "low": 2,
+        "high": 4,
+        "unit": "days"
+      },
+      "direct_transition": "Malaria_Encounter"
+    },
+    "Delayed_Care_Long": {
+      "type": "Delay",
+      "range": {
+        "low": 4,
+        "high": 7,
+        "unit": "days"
+      },
+      "direct_transition": "Malaria_Encounter"
+    },
+    "Observe_Temperature": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "vital_sign": "temperature",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "8310-5",
+          "display": "Body temperature"
+        }
+      ],
+      "direct_transition": "Observe_Hemoglobin"
+    },
+    "Observe_Hemoglobin": {
+      "type": "Observation",
+      "category": "laboratory",
+      "vital_sign": "hemoglobin",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "718-7",
+          "display": "Hemoglobin [Mass/volume] in Blood"
+        }
+      ],
+      "direct_transition": "Malaria_RDT"
+    }
+  }
+}

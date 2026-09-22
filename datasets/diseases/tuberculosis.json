@@ -1,0 +1,244 @@
+{
+  "name": "Tuberculosis",
+  "remarks": [
+    "Nigerian Tuberculosis (TB) Module.",
+    "Incidence sourced from WHO Global TB Report 2022 (approx 219 per 100,000 national average).",
+    "Age/Sex specific incidence modelled based on WHO demographic breakdown (males > females > children)."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Evaluation"
+    },
+    "Annual_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "hiv_positive",
+            "operator": "==",
+            "value": true
+          },
+          "distributions": [
+            {
+              "distribution": 0.05,
+              "transition": "TB_Onset"
+            },
+            {
+              "distribution": 0.95,
+              "transition": "Annual_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "And",
+            "conditions": [
+              {
+                "condition_type": "Gender",
+                "gender": "M"
+              },
+              {
+                "condition_type": "Age",
+                "operator": ">=",
+                "quantity": 15,
+                "unit": "years"
+              }
+            ]
+          },
+          "distributions": [
+            {
+              "distribution": 0.003,
+              "transition": "TB_Onset"
+            },
+            {
+              "distribution": 0.997,
+              "transition": "Annual_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "And",
+            "conditions": [
+              {
+                "condition_type": "Gender",
+                "gender": "F"
+              },
+              {
+                "condition_type": "Age",
+                "operator": ">=",
+                "quantity": 15,
+                "unit": "years"
+              }
+            ]
+          },
+          "distributions": [
+            {
+              "distribution": 0.0018,
+              "transition": "TB_Onset"
+            },
+            {
+              "distribution": 0.9982,
+              "transition": "Annual_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 15,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.001,
+              "transition": "TB_Onset"
+            },
+            {
+              "distribution": 0.999,
+              "transition": "Annual_Evaluation"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Annual_Evaluation"
+    },
+    "TB_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "56717001",
+          "display": "Tuberculosis"
+        }
+      ],
+      "direct_transition": "Symptoms_Delay"
+    },
+    "Symptoms_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 2,
+        "high": 4,
+        "unit": "weeks"
+      },
+      "direct_transition": "TB_Cough"
+    },
+    "TB_Cough": {
+      "type": "Symptom",
+      "symptom": "Prolonged cough",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "TB_Encounter"
+    },
+    "TB_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up (procedure)"
+        }
+      ],
+      "direct_transition": "TB_Diagnosis"
+    },
+    "TB_Diagnosis": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "11545-1",
+          "display": "Microscopic observation [Identifier] in Sputum by Acid fast stain"
+        }
+      ],
+      "exact": {
+        "quantity": 1
+      },
+      "direct_transition": "TB_Treatment_Start"
+    },
+    "TB_Treatment_Start": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1147220",
+          "display": "Rifampin / Isoniazid / Pyrazinamide / Ethambutol"
+        }
+      ],
+      "direct_transition": "Treatment_Delay"
+    },
+    "Treatment_Delay": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 6,
+        "unit": "months"
+      },
+      "direct_transition": "Treatment_Outcome"
+    },
+    "Treatment_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.85,
+          "transition": "TB_Cured"
+        },
+        {
+          "distribution": 0.05,
+          "transition": "TB_Death"
+        },
+        {
+          "distribution": 0.1,
+          "transition": "TB_Persistent"
+        }
+      ]
+    },
+    "TB_Cured": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "56717001",
+          "display": "Tuberculosis"
+        }
+      ],
+      "direct_transition": "Medication_End"
+    },
+    "Medication_End": {
+      "type": "MedicationEnd",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1147220",
+          "display": "Rifampin / Isoniazid / Pyrazinamide / Ethambutol"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "TB_Persistent": {
+      "type": "Simple",
+      "direct_transition": "Terminal"
+    },
+    "TB_Death": {
+      "type": "Death",
+      "condition_onset": "Tuberculosis",
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

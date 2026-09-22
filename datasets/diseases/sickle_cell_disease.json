@@ -1,0 +1,351 @@
+{
+  "name": "Sickle Cell Disease",
+  "remarks": [
+    "Modelled for Nigeria. HbSS/HbSC trigger the disease pathway."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Check_Genotype"
+    },
+    "Check_Genotype": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Or",
+            "conditions": [
+              {
+                "condition_type": "Attribute",
+                "attribute": "genotype",
+                "operator": "==",
+                "value": "HbSS"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "genotype",
+                "operator": "==",
+                "value": "HbSC"
+              }
+            ]
+          },
+          "distributions": [
+            {
+              "distribution": 1.0,
+              "transition": "SCD_Onset"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Terminal"
+    },
+    "SCD_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "417357006",
+          "display": "Sickle cell disease (disorder)"
+        }
+      ],
+      "direct_transition": "Evaluate_Treatment"
+    },
+    "Evaluate_Treatment": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.15,
+          "transition": "Prescribe_Hydroxyurea"
+        },
+        {
+          "distribution": 0.85,
+          "transition": "SCD_Annual_Loop"
+        }
+      ]
+    },
+    "Prescribe_Hydroxyurea": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "5413",
+          "display": "Hydroxyurea 500 MG"
+        }
+      ],
+      "direct_transition": "SCD_Annual_Loop"
+    },
+    "SCD_Annual_Loop": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "months"
+      },
+      "direct_transition": "Evaluate_Mortality"
+    },
+    "Evaluate_Mortality": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.012,
+              "transition": "SCD_Death"
+            },
+            {
+              "distribution": 0.988,
+              "transition": "Evaluate_Infection_Trigger"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": ">=",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.001,
+              "transition": "SCD_Death"
+            },
+            {
+              "distribution": 0.999,
+              "transition": "Evaluate_Infection_Trigger"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Evaluate_Infection_Trigger"
+    },
+    "Evaluate_Infection_Trigger": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Symptom",
+            "symptom": "Fever",
+            "operator": ">",
+            "value": 0
+          },
+          "distributions": [
+            {
+              "distribution": 0.3,
+              "transition": "VOC_Crisis"
+            },
+            {
+              "distribution": 0.7,
+              "transition": "Evaluate_Crisis"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Evaluate_Crisis"
+    },
+    "Evaluate_Crisis": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.05,
+              "transition": "VOC_Crisis"
+            },
+            {
+              "distribution": 0.95,
+              "transition": "SCD_Annual_Loop"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Evaluate_Adult_Crisis"
+    },
+    "Evaluate_Adult_Crisis": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.1,
+          "transition": "VOC_Crisis"
+        },
+        {
+          "distribution": 0.01,
+          "transition": "Acute_Chest_Syndrome"
+        },
+        {
+          "distribution": 0.89,
+          "transition": "SCD_Annual_Loop"
+        }
+      ]
+    },
+    "VOC_Crisis": {
+      "type": "Symptom",
+      "symptom": "Severe Pain",
+      "probability": 1.0,
+      "direct_transition": "Crisis_Encounter"
+    },
+    "Crisis_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "Transfusion_Check"
+    },
+    "Transfusion_Check": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.15,
+          "transition": "Transfusion"
+        },
+        {
+          "distribution": 0.85,
+          "transition": "Pain_Meds"
+        }
+      ]
+    },
+    "Transfusion": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "116859006",
+          "display": "Transfusion of blood"
+        }
+      ],
+      "direct_transition": "Pain_Meds"
+    },
+    "Pain_Meds": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "161",
+          "display": "Acetaminophen 500 MG"
+        }
+      ],
+      "direct_transition": "Crisis_Duration"
+    },
+    "Crisis_Duration": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "weeks"
+      },
+      "direct_transition": "End_Crisis"
+    },
+    "End_Crisis": {
+      "type": "MedicationEnd",
+      "medication_order": "Pain_Meds",
+      "direct_transition": "End_Crisis_Encounter"
+    },
+    "End_Crisis_Encounter": {
+      "type": "EncounterEnd",
+      "direct_transition": "SCD_Annual_Loop"
+    },
+    "Acute_Chest_Syndrome": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "195861008",
+          "display": "Acute chest syndrome"
+        }
+      ],
+      "direct_transition": "ACS_Encounter"
+    },
+    "ACS_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "inpatient",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "32485007",
+          "display": "Hospital admission"
+        }
+      ],
+      "direct_transition": "ACS_Transfusion"
+    },
+    "ACS_Transfusion": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "116859006",
+          "display": "Transfusion of blood"
+        }
+      ],
+      "direct_transition": "ACS_Treatment"
+    },
+    "ACS_Treatment": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "2060010",
+          "display": "Ceftriaxone 1000 MG Injection"
+        }
+      ],
+      "direct_transition": "ACS_Duration"
+    },
+    "ACS_Duration": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 2,
+        "unit": "weeks"
+      },
+      "direct_transition": "ACS_Outcome"
+    },
+    "ACS_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.1,
+          "transition": "SCD_Death"
+        },
+        {
+          "distribution": 0.9,
+          "transition": "End_ACS"
+        }
+      ]
+    },
+    "End_ACS": {
+      "type": "ConditionEnd",
+      "condition_onset": "Acute_Chest_Syndrome",
+      "direct_transition": "End_ACS_Med"
+    },
+    "End_ACS_Med": {
+      "type": "MedicationEnd",
+      "medication_order": "ACS_Treatment",
+      "direct_transition": "End_ACS_Encounter"
+    },
+    "End_ACS_Encounter": {
+      "type": "EncounterEnd",
+      "direct_transition": "SCD_Annual_Loop"
+    },
+    "SCD_Death": {
+      "type": "Death",
+      "condition_onset": "SCD_Onset",
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

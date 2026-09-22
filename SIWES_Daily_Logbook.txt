@@ -1,0 +1,969 @@
+MEDSYNTH SIWES LOGBOOK - (APRIL 13, 2026 TO SEPTEMBER 30, 2026)
+FORMATTED TO MATCH PHYSICAL LOGBOOK EXACTLY
+=================================================
+
+===========================================================
+WEEK: 1
+WEEK ENDING: 17 April 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Orientation & Architecture Design
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on orientation & architecture design. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 13th April 2026
+DESCRIPTION OF WORK DONE:
+Configured the local development environment with Python 3.10 and VS Code to support the MedSynth project. Reviewed the initial project brief to understand the goals of generating synthetic health records.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 14th April 2026
+DESCRIPTION OF WORK DONE:
+Analyzed electronic health record (EHR) architectures to determine the necessary data fields for patient generation. Studied the Nigeria Data Protection Act (NDPA) to ensure the system complies with local privacy regulations.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 15th April 2026
+DESCRIPTION OF WORK DONE:
+Evaluated the MITRE Synthea software to understand its data generation approach. Identified limitations in its representation of African patient demographics and proposed structural adjustments.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 16th April 2026
+DESCRIPTION OF WORK DONE:
+Drafted the initial database schema to map out how patient records will be stored. Participated in a team meeting to outline the technical requirements for our custom Nigerian implementation.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 17th April 2026
+DESCRIPTION OF WORK DONE:
+Extracted 2006 Nigerian census data from the National Bureau of Statistics. Cleaned and formatted the demographic numbers using Python scripts to prepare them for integration into the generation engine.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 2
+WEEK ENDING: 24 April 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Data Sourcing & Environment Setup
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on data sourcing & environment setup. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 20th April 2026
+DESCRIPTION OF WORK DONE:
+Gathered local incidence rates for Malaria and Typhoid from World Health Organization (WHO) datasets. Structured the data into a normalized CSV file to drive the disease simulation probabilities.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 21st April 2026
+DESCRIPTION OF WORK DONE:
+Set up the local version control environment using Git and cloned the MedSynth core repository. Resolved initial dependency errors to ensure the project compiled successfully.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 22nd April 2026
+DESCRIPTION OF WORK DONE:
+Defined the core Patient data model in Python by initializing essential demographic variables. Incorporated age and gender fields based on the extracted census distributions.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 23rd April 2026
+DESCRIPTION OF WORK DONE:
+Implemented biological sex assignment logic utilizing a 51:49 male-to-female probability ratio. Applied encapsulation methods to secure the demographic data during the generation lifecycle.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 24th April 2026
+DESCRIPTION OF WORK DONE:
+Developed a chronological 1-week time-step loop to iteratively age patients within the simulation. Debugged leap-year edge cases to ensure long-term age calculations remained accurate.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 3
+WEEK ENDING: 01 May 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Core Patient Initialization Logic
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on core patient initialization logic. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 27th April 2026
+DESCRIPTION OF WORK DONE:
+Tested the chronological aging loop against a sample size of 50 patients to verify stability. Identified and patched a logic error that caused incorrect age progression in older profiles.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 28th April 2026
+DESCRIPTION OF WORK DONE:
+Analyzed the geographic distribution of the 36 Nigerian states and the Federal Capital Territory. Loaded a comprehensive dataset of 774 Local Government Areas (LGAs) into a Pandas DataFrame.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 29th April 2026
+DESCRIPTION OF WORK DONE:
+Engineered geographic mapping functions to assign virtual patients to specific LGAs. Utilized population density weightings to ensure the distribution accurately reflected real-world urban and rural demographics.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 30th April 2026
+DESCRIPTION OF WORK DONE:
+Participated in a peer code review of the geographic mapping scripts. Addressed null-value assignment errors that occurred when processing data for extremely remote rural areas.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 01st May 2026
+DESCRIPTION OF WORK DONE:
+Workers' Day (Public Holiday)
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 4
+WEEK ENDING: 08 May 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Geographic Mapping & Pandas Integration
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on geographic mapping & pandas integration. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 04th May 2026
+DESCRIPTION OF WORK DONE:
+Executed a stress test of the geographic algorithms by generating 1,000 patients. Programmatically verified that the resulting state distributions matched the target census targets.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 05th May 2026
+DESCRIPTION OF WORK DONE:
+Extracted average pediatric height and weight metrics from WHO growth charts. Parsed the raw metrics into Python arrays to serve as baseline health indicators for the physiology module.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 06th May 2026
+DESCRIPTION OF WORK DONE:
+Programmed a dynamic Python function to calculate Body Mass Index (BMI). Configured the function to iteratively update the patient's BMI as their height and weight change over time.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 07th May 2026
+DESCRIPTION OF WORK DONE:
+Developed algorithms to establish baseline systolic and diastolic blood pressure readings. Utilized age-adjusted standard deviations to generate clinically realistic vital signs for adult patients.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 08th May 2026
+DESCRIPTION OF WORK DONE:
+Refined the physiology module by setting newborn resting heart rates to the clinically accurate range of 120-160 bpm. Conducted unit tests to ensure all vital signs remained within survivable limits.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 5
+WEEK ENDING: 15 May 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Physiology & Vital Signs Algorithms
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on physiology & vital signs algorithms. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 11th May 2026
+DESCRIPTION OF WORK DONE:
+Curated localized datasets of Hausa, Igbo, and Yoruba names to ensure culturally accurate synthetic patients. Programmed a probabilistic name-assignment function tied to geographic zones and ethnic distributions.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 12th May 2026
+DESCRIPTION OF WORK DONE:
+Designed a Finite State Machine (FSM) architecture to simulate the progression of clinical diseases. Drafted a detailed flowchart mapping out the clinical pathway for Malaria.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 13th May 2026
+DESCRIPTION OF WORK DONE:
+Modeled the infection stages of Malaria and Typhoid fever using JSON data structures. Defined distinct states for initial infection, symptom onset, and clinical treatment.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 14th May 2026
+DESCRIPTION OF WORK DONE:
+Researched standard incubation periods for the target diseases. Programmed Python conditional rules to trigger specific physiological symptoms based on the elapsed time in the FSM.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 15th May 2026
+DESCRIPTION OF WORK DONE:
+Implemented a 95 percent recovery probability for patients receiving treatment in the simulation. Standardized clinical terminology across the codebase to ensure consistency.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 6
+WEEK ENDING: 22 May 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Clinical Flowcharts & Refactoring
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on clinical flowcharts & refactoring. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 18th May 2026
+DESCRIPTION OF WORK DONE:
+Collaborated on writing Python logic for Sickle Cell Disease (HbSS). Programmed constraints to ensure this genetic condition is assigned strictly at birth during patient initialization.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 19th May 2026
+DESCRIPTION OF WORK DONE:
+Programmed logic guards for the Stroke and Ischemic Heart Disease models. Ensured these adult-onset cardiovascular conditions are strictly restricted from triggering in pediatric populations.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 20th May 2026
+DESCRIPTION OF WORK DONE:
+Investigated a critical execution error within the disease timing loop. Traced the variable states step-by-step to identify and resolve a persistent infinite loop.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 21st May 2026
+DESCRIPTION OF WORK DONE:
+Refactored the rule engine within logic.py to persistently track chronic conditions. Ensured that long-term diseases correctly influence patient health across the entire simulated lifespan.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 22nd May 2026
+DESCRIPTION OF WORK DONE:
+Submitted the finalized Sickle Cell FSM logic for team review via a GitHub Pull Request. Collaborated with colleagues to resolve merge conflicts in the main branch.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 7
+WEEK ENDING: 29 May 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Malaria JSON Disease Modeling
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on malaria json disease modeling. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 25th May 2026
+DESCRIPTION OF WORK DONE:
+Developed a JSON validation script to verify the structural integrity of the disease models. Corrected missing delimiters and keys in the Malaria module to prevent runtime crashes.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 26th May 2026
+DESCRIPTION OF WORK DONE:
+Eid-El-Kabir (Public Holiday)
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 27th May 2026
+DESCRIPTION OF WORK DONE:
+Eid-El-Kabir (Public Holiday)
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 28th May 2026
+DESCRIPTION OF WORK DONE:
+Modeled a preventative 'Routine Checkup' encounter state within the Python engine. Linked this wellness visit to the FSM logic to simulate early disease detection.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 29th May 2026
+DESCRIPTION OF WORK DONE:
+Integrated the standalone disease JSON models into the main patient generation loop. Executed automated tests to verify that trigger conditions fired at the correct clinical thresholds.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 8
+WEEK ENDING: 05 June 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Condition Rules & Debugging
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on condition rules & debugging. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 01st June 2026
+DESCRIPTION OF WORK DONE:
+Developed JSON disease state machines for HIV and Tuberculosis. Programmed conditional logic to simulate co-infection risks, increasing the mortality probability if a patient contracts both.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 02nd June 2026
+DESCRIPTION OF WORK DONE:
+Presented the simulated disease progression data to the industry supervisor. Adjusted the recovery timeframes based on their clinical feedback to improve real-world accuracy.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 03rd June 2026
+DESCRIPTION OF WORK DONE:
+Designed a nested dictionary structure within health_record.py. Utilized this structure to efficiently store the patient's chronological medical history in memory during generation.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 04th June 2026
+DESCRIPTION OF WORK DONE:
+Linked observational data, such as 'fever' or 'high blood pressure', directly to specific hospital encounters. Ensured every recorded symptom maintains strict clinical context.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 05th June 2026
+DESCRIPTION OF WORK DONE:
+Implemented Universally Unique Identifiers (UUIDs) across the data models. Assigned unique strings to every simulated hospital encounter to guarantee database integrity.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 9
+WEEK ENDING: 12 June 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Validation & Preventative Care States
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on validation & preventative care states. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 08th June 2026
+DESCRIPTION OF WORK DONE:
+Engineered the 'Medication' and 'Condition' classes in health_record.py. Programmed object relationships to strictly tie drug prescriptions to the diagnostic encounter that triggered them.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 09th June 2026
+DESCRIPTION OF WORK DONE:
+Designed pediatric clinical pathways by modeling Neonatal Disorders and Diarrheal Diseases. Mapped physiological symptoms like severe dehydration directly to simulated hospital encounters.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 10th June 2026
+DESCRIPTION OF WORK DONE:
+Helped develop an Argparse command-line interface to execute the simulation. Added a '--population' flag to allow researchers to easily specify the desired cohort size.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 11th June 2026
+DESCRIPTION OF WORK DONE:
+Implemented a deterministic random seed mechanism in the core generation engine. Allowed researchers to pass a "--seed" argument via the command-line to ensure generated patient populations are 100% reproducible.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 12th June 2026
+DESCRIPTION OF WORK DONE:
+Democracy Day (Public Holiday)
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 10
+WEEK ENDING: 19 June 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: System Integration & Stress Testing
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on system integration & stress testing. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 15th June 2026
+DESCRIPTION OF WORK DONE:
+Executed a 10,000 patient simulation in the terminal to monitor system memory consumption. Resolved a ValueError crash caused by improper type casting during the generation loop.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 16th June 2026
+DESCRIPTION OF WORK DONE:
+Extracted geographic coordinates for clinics from the Nigeria Healthcare Facility Registry. Formatted the data to enable the spatial mapping of virtual patients to real-world hospitals.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 17th June 2026
+DESCRIPTION OF WORK DONE:
+Updated geography.py to incorporate hospital locations. Wrote a spatial filter to assign each patient to the closest primary healthcare clinic within their Local Government Area.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 18th June 2026
+DESCRIPTION OF WORK DONE:
+Implemented a fallback routing algorithm for rural LGAs lacking primary clinics. Configured the logic to automatically route affected patients to the nearest State General Hospital.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 19th June 2026
+DESCRIPTION OF WORK DONE:
+Resolved a KeyError crash triggered by extreme spatial edge cases where rural patients found no hospitals within their radius. Added a default hospital assignment to handle these anomalies.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 11
+WEEK ENDING: 26 June 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Chronological Database & UUIDs
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on chronological database & uuids. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 22nd June 2026
+DESCRIPTION OF WORK DONE:
+Ran a massive 500,000 patient simulation that took 5 hours to stress-test the hospital routing logic under heavy computational load. Backed up the resulting generation logs for team analysis.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 23rd June 2026
+DESCRIPTION OF WORK DONE:
+Analyzed the stress-test terminal logs to identify impossible medical events. Optimized a slow spatial filtering loop that was causing the generation process to bottleneck.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 24th June 2026
+DESCRIPTION OF WORK DONE:
+Committed the finalized hospital routing code to the main Git branch. Participated in a code review session to ensure the routing algorithms met the project's performance standards.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 25th June 2026
+DESCRIPTION OF WORK DONE:
+Formulated a strategy for exporting the massive in-memory medical records. Decided to serialize the Python objects into normalized CSV spreadsheets for easier database ingestion.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 26th June 2026
+DESCRIPTION OF WORK DONE:
+Authored the csv_exporter.py module utilizing Python's csv.DictWriter. Systematically serialized the demographic data of the in-memory Patient objects into 'patients.csv'.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 12
+WEEK ENDING: 03 July 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: FHIR Standards & Command Line UI
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on fhir standards & command line ui. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 29th June 2026
+DESCRIPTION OF WORK DONE:
+Formatted the 'encounters.csv' table to capture all hospital visits. Programmatically linked these visit records to the patients using the generated UUIDs to maintain relational structure.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 30th June 2026
+DESCRIPTION OF WORK DONE:
+Configured the 'medications.csv' export module to include complex pharmacological parameters. Ensured drug names, dosages, and administration frequencies were properly serialized.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 01st July 2026
+DESCRIPTION OF WORK DONE:
+Developed the validator module to ensure all generated health records meet required clinical constraints. Implemented strict data-type checks to prevent missing values in critical fields like patient age and gender.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 02nd July 2026
+DESCRIPTION OF WORK DONE:
+Studied the Health Level Seven (HL7) Fast Healthcare Interoperability Resources (FHIR) standard. Analyzed the strict JSON schemas required for modern healthcare data exchange.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 03rd July 2026
+DESCRIPTION OF WORK DONE:
+Translated the demographic data models into fully compliant FHIR Patient JSON resources. Mapped the local variables to the global standard formats to ensure interoperability.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 13
+WEEK ENDING: 10 July 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Spatial Routing & Error Handling
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on spatial routing & error handling. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 06th July 2026
+DESCRIPTION OF WORK DONE:
+Converted the hospital visit logs into FHIR Encounter resources. Utilized strict reference pointers within the JSON to link the encounters back to the appropriate Patient resource.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 07th July 2026
+DESCRIPTION OF WORK DONE:
+Mapped the simulated Malaria conditions to their official SNOMED-CT code (61462000). Ensured the synthetic records utilized standardized clinical terminology for global understanding.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 08th July 2026
+DESCRIPTION OF WORK DONE:
+Mapped the newly integrated Meningitis and Lower Respiratory Infection modules to their official SNOMED-CT and ICD-10 codes to ensure global interoperability.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 09th July 2026
+DESCRIPTION OF WORK DONE:
+Validated the exported FHIR data bundles using the official HL7 online validator tool. Corrected a missing 'status' field in the Condition resource that caused a validation failure.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 10th July 2026
+DESCRIPTION OF WORK DONE:
+Confirmed the operational readiness of both the CSV and FHIR data export modules. Researched Python multiprocessing techniques to accelerate massive patient generation tasks.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 14
+WEEK ENDING: 17 July 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Stress Testing & Code Optimization
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on stress testing & code optimization. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 13th July 2026
+DESCRIPTION OF WORK DONE:
+Implemented a multiprocessing pool to execute multiple patient simulations concurrently. Split the processing workload across available CPU cores to drastically reduce generation time.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 14th July 2026
+DESCRIPTION OF WORK DONE:
+Optimized the parallel processing architecture by grouping patients into chunks of 100. Prevented memory overload by clearing the generation queue after each chunk was processed.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 15th July 2026
+DESCRIPTION OF WORK DONE:
+Resolved a severe memory leak that caused RAM spikes during parallel execution. Fixed a race-condition bug that occasionally corrupted data during simultaneous CSV writes.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 16th July 2026
+DESCRIPTION OF WORK DONE:
+Implemented file locking mechanisms to ensure data integrity during parallel writes. Removed excessive print statements from the core loop to maximize the simulation's computational speed.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 17th July 2026
+DESCRIPTION OF WORK DONE:
+Assisted in designing a Streamlit web dashboard to provide a graphical interface for researchers. Programmed sidebar sliders to easily manage population size and disease variables.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 15
+WEEK ENDING: 24 July 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Relational CSV Data Exportation
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on relational csv data exportation. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 20th July 2026
+DESCRIPTION OF WORK DONE:
+Linked the 'Generate' UI button on the dashboard to trigger the asynchronous Python multiprocessing backend. Ensured the interface remained responsive during heavy generation tasks.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 21st July 2026
+DESCRIPTION OF WORK DONE:
+Implemented a dynamic progress bar within the Streamlit interface. Configured the bar to read directly from the multiprocessing queue to provide accurate real-time feedback.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 22nd July 2026
+DESCRIPTION OF WORK DONE:
+Designed a 'Patient Explorer' data table using Pandas DataFrames. Enabled researchers to select and view the individual medical histories of the synthetically generated patients.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 23rd July 2026
+DESCRIPTION OF WORK DONE:
+Integrated the generated CSV files into the dashboard's Pandas DataFrames. Implemented pagination controls to ensure the massive data tables rendered smoothly without freezing the UI.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 24th July 2026
+DESCRIPTION OF WORK DONE:
+Programmed a search and filter function for the Patient Explorer dashboard. Allowed users to instantly query the dataset by specific diseases, age groups, or geographic locations.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 16
+WEEK ENDING: 31 July 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: HL7 FHIR JSON Compliance Mapping
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on hl7 fhir json compliance mapping. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 27th July 2026
+DESCRIPTION OF WORK DONE:
+Stress-tested the Streamlit dashboard by generating 5,000 patients concurrently. Monitored CPU usage to ensure the UI did not crash or hang during the backend processing.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 28th July 2026
+DESCRIPTION OF WORK DONE:
+Adjusted the layout settings to match the institution's branding colors. Added an 'About MedSynth' card to help first-time users.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 29th July 2026
+DESCRIPTION OF WORK DONE:
+Participated in a final review of the project code with the team. Checked that all Python scripts were working correctly without errors.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 30th July 2026
+DESCRIPTION OF WORK DONE:
+Started organizing the main project documentation. Wrote the introductory sections explaining how the disease models work.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 31st July 2026
+DESCRIPTION OF WORK DONE:
+Gathered all the health and population data from WHO and NBS used in the project. Formatted the references properly for the final report.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 17
+WEEK ENDING: 07 August 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: FHIR Validation & Bug Fixing
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on fhir validation & bug fixing. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 03rd August 2026
+DESCRIPTION OF WORK DONE:
+Designed PowerPoint slides explaining how the system shares health data. Prepared the content for the upcoming group presentation.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 04th August 2026
+DESCRIPTION OF WORK DONE:
+Conducted practice runs of the dashboard demonstration. Spotted some minor visual issues and planned a smooth workflow for the presentation.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 05th August 2026
+DESCRIPTION OF WORK DONE:
+Delivered the MedSynth presentation to the OAK-Park directors alongside the team. Explained how the generated health data can be used for medical research.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 06th August 2026
+DESCRIPTION OF WORK DONE:
+Participated in a debriefing meeting to review the feedback from the directors. Listed the requested updates for the team to work on later.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 07th August 2026
+DESCRIPTION OF WORK DONE:
+Wrote the final instruction file explaining how to install and run MedSynth. Saved a list of the required Python libraries so others can set it up easily.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 18
+WEEK ENDING: 14 August 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Multiprocessing & Performance Scaling
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+This week focused on multiprocessing & performance scaling. Executed the required clinical and technical milestones while validating the underlying logic.
+===========================================================
+
+DAY & DATE: Monday, 10th August 2026
+DESCRIPTION OF WORK DONE:
+Tested the software on a different computer to make sure the setup worked correctly. Agreed with the team to stop making changes to the main medical rules.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 11th August 2026
+DESCRIPTION OF WORK DONE:
+Ran final tests on the generated patient records. Checked that the disease triggers and patient details were highly accurate.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 12th August 2026
+DESCRIPTION OF WORK DONE:
+Designed an academic poster showing how the Malaria disease model works. Summarized the project's achievements for the presentation.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 13th August 2026
+DESCRIPTION OF WORK DONE:
+Reviewed the project diagrams created by team members to ensure they were consistent. Applied final color tweaks to the dashboard based on recent feedback.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 14th August 2026
+DESCRIPTION OF WORK DONE:
+Uploaded the final project files to the official OAK-Park GitHub account. Cleared out all generated test data from the computer.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 19
+WEEK ENDING: 21 August 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Stroke Disease Model & Generator Options
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Focused on stroke disease model and generator options.
+===========================================================
+
+DAY & DATE: Monday, 17th August 2026
+DESCRIPTION OF WORK DONE:
+Added the Stroke disease model to the program. Set the rules for how age increases the chance of a stroke, making it rare for patients under 40. Spent the afternoon reading medical literature to ensure the age brackets matched real-world clinical data.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 18th August 2026
+DESCRIPTION OF WORK DONE:
+Wrote Python code to automatically assign medications for stroke patients, such as Aspirin and other blood thinners. Tested the simulation repeatedly to confirm that the medication orders were only generated after the stroke onset, not before.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 19th August 2026
+DESCRIPTION OF WORK DONE:
+Updated the patient generator options. Added a feature so users can choose exactly how many patients they want to create. Modified the command-line interface logic to accept this new parameter without crashing.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 20th August 2026
+DESCRIPTION OF WORK DONE:
+Added an option in the generator to select specific age ranges, so we can test the stroke model on older patient groups. Debugged an issue where setting a very narrow age range caused the simulation to loop endlessly.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 21st August 2026
+DESCRIPTION OF WORK DONE:
+Tested the new generator options to make sure the program only creates patients that match the selected age and number rules. Generated several small sample populations and manually verified their demographics in the output files.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 20
+WEEK ENDING: 28 August 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Heart Disease Logic & Hospital Routing
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Implemented heart disease logic and hospital routing.
+===========================================================
+
+DAY & DATE: Monday, 24th August 2026
+DESCRIPTION OF WORK DONE:
+Wrote a Python script to check that the stroke model doesn't give patients the wrong medications by mistake during the simulation. Added specific unit tests to ensure safety protocols are strictly followed in the synthetic data.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 25th August 2026
+DESCRIPTION OF WORK DONE:
+Added the Ischemic Heart Disease model. Programmed the logic to simulate an annual risk of acute heart attacks based strictly on patient age. Cross-referenced the statistical probabilities with Nigerian cardiovascular health reports.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 26th August 2026
+DESCRIPTION OF WORK DONE:
+Connected the heart disease model with the patient's age data, making sure it happens more often in older populations. Analyzed the generated JSON outputs to verify that the age distribution of heart attacks looked realistic.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 27th August 2026
+DESCRIPTION OF WORK DONE:
+Improved the code that handles patient visits to the hospital so that heart disease patients show up in the facility records correctly. Ensured that severe cases trigger an emergency room admission event.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 28th August 2026
+DESCRIPTION OF WORK DONE:
+Fixed a bug where patients with heart disease were not being assigned to the correct health center in their local government area. Adjusted the spatial routing algorithm to fallback to state-level hospitals if local clinics were unavailable.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 21
+WEEK ENDING: 04 September 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Tuberculosis & HIV Co-Infection Models
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Developed tuberculosis and HIV co-infection models.
+===========================================================
+
+DAY & DATE: Monday, 31st August 2026
+DESCRIPTION OF WORK DONE:
+Worked on the Tuberculosis (TB) model. Wrote code to simulate how TB spreads differently depending on the patient's age and sex. Reviewed WHO demographic breakdowns to ensure males had a higher modeled incidence than females and children.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 01st September 2026
+DESCRIPTION OF WORK DONE:
+Added a feature that allows TB patients to also get HIV in the simulation, since these two diseases often happen together in real life. Programmed the condition onset logic to trigger a positive HIV flag when necessary.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 02nd September 2026
+DESCRIPTION OF WORK DONE:
+Updated the Streamlit dashboard code to accurately display the new TB and HIV patient numbers on the result charts. Adjusted the color schemes on the bar charts to make the co-infection rates easier to read.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 03rd September 2026
+DESCRIPTION OF WORK DONE:
+Programmed the Neonatal Disorders model. Wrote logic to assign health issues like prematurity and sepsis to newborn babies based on statistical risks. Sourced the incidence probabilities from recent UNICEF and NDHS documentation.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 04th September 2026
+DESCRIPTION OF WORK DONE:
+Fixed an error in the Python code that caused the newborn health records to occasionally show up with incorrect birth dates. Re-ran the generation script multiple times to confirm the chronological timeline was finally accurate.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 22
+WEEK ENDING: 11 September 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: State Targeting & Respiratory Models
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Implemented state targeting and respiratory disease models.
+===========================================================
+
+DAY & DATE: Monday, 07th September 2026
+DESCRIPTION OF WORK DONE:
+Added a "target state" option to the generator. This allows us to create patients only for a specific state, like Lagos or Kano. Updated the user interface dropdowns to automatically pull from the available geographic data.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 08th September 2026
+DESCRIPTION OF WORK DONE:
+Wrote a script to handle the Lower Respiratory Infections model, setting rules for how quickly the disease worsens in children. Modeled the progression states from initial observation to severe respiratory distress.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 09th September 2026
+DESCRIPTION OF WORK DONE:
+Connected the respiratory infections model to the patient's age, making sure older people also catch it during the simulation runs. Validated the generated outputs to ensure the disease wasn't exclusively affecting infants.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 10th September 2026
+DESCRIPTION OF WORK DONE:
+Improved the patient explorer page in the dashboard so we can easily search for patients who specifically had a stroke or heart attack. Added new filtering options to sort the records by condition and encounter type.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 11th September 2026
+DESCRIPTION OF WORK DONE:
+Added a new export option to the Python code. Made sure the generated patient data can be saved clearly as a JSON file. Tested the export function with a massive dataset to ensure it didn't cause memory overflow errors.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 23
+WEEK ENDING: 18 September 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Diarrheal Diseases & Code Cleanup
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Programmed diarrheal diseases and cleaned Python code.
+===========================================================
+
+DAY & DATE: Monday, 14th September 2026
+DESCRIPTION OF WORK DONE:
+Worked on the Diarrheal Diseases model. Programmed the symptoms like weight loss and high temperature for affected patients. Mapped the vital sign observations to their correct clinical codes for standardization.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 15th September 2026
+DESCRIPTION OF WORK DONE:
+Added code to make sure patients with severe diarrhea are routed to the nearest health facility in their local government area. Verified that the hospital encounter logs accurately reflected these emergency visits.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 16th September 2026
+DESCRIPTION OF WORK DONE:
+Cleaned up the Python code for the disease models. Removed unused variables to make the files shorter and easier for others to read. Added clear comments to explain the complex transition probabilities.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 17th September 2026
+DESCRIPTION OF WORK DONE:
+Added a feature to the generator that lets users set the "sex" of the patients to only male or only female if they want to test specific diseases. Updated the Streamlit configuration panel to include this new toggle switch.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 18th September 2026
+DESCRIPTION OF WORK DONE:
+Ran the whole program to create 50,000 patients. Checked that all the new diseases, like Stroke and TB, worked perfectly with the new generator options. Spent the afternoon reviewing the generated demographics for any anomalies.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 24
+WEEK ENDING: 25 September 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Bug Fixes & Dashboard Finalization
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Resolved bugs and finalized dashboard layout options.
+===========================================================
+
+DAY & DATE: Monday, 21st September 2026
+DESCRIPTION OF WORK DONE:
+Fixed a bug where the generator options were ignoring the user's selected state and creating patients randomly across the whole country. Rewrote the geographic filtering logic to strictly enforce the target boundaries.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 22nd September 2026
+DESCRIPTION OF WORK DONE:
+Wrote simple comments in the code to explain how the stroke and heart disease models calculate patient ages and risks. Ensured that any future developer could easily understand the logic without needing a medical background.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 23rd September 2026
+DESCRIPTION OF WORK DONE:
+Updated the dashboard layout so the new generator options (like age, sex, and state limits) fit neatly on the computer screen. Adjusted the padding and margins to create a more professional and uncluttered user interface.
+-----------------------------------------------------------
+
+DAY & DATE: Thursday, 24th September 2026
+DESCRIPTION OF WORK DONE:
+Tested the random seed feature again to make sure that generating patients twice with the same seed gave the exact same results. Confirmed that the reproducibility requirement was fully met for academic research purposes.
+-----------------------------------------------------------
+
+DAY & DATE: Friday, 25th September 2026
+DESCRIPTION OF WORK DONE:
+Combined all the final Python scripts into the main project folder so the MedSynth program is organized and ready to share. Conducted a final dry-run of the entire application to ensure zero critical errors remained.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+
+===========================================================
+WEEK: 25
+WEEK ENDING: 30 September 2026
+DEPT/SECTION: Health Informatics Research Unit
+PROJECT/JOB FOR THE WEEK: Project Handover
+
+DESCRIPTION OF WEEK-ENDING (Weekly Summary):
+Conducted project handover and final clearance paperwork.
+===========================================================
+
+DAY & DATE: Monday, 28th September 2026
+DESCRIPTION OF WORK DONE:
+Saved clear screenshots of the new generator options and the stroke data charts to include in the final project handover files. Organized these assets into a digital portfolio for the full-time developers to reference.
+-----------------------------------------------------------
+
+DAY & DATE: Tuesday, 29th September 2026
+DESCRIPTION OF WORK DONE:
+Showed the final working code to the supervisor, focusing on how the new diseases and generator settings run without any errors. Walked through the complete data generation pipeline from start to finish.
+-----------------------------------------------------------
+
+DAY & DATE: Wednesday, 30th September 2026
+DESCRIPTION OF WORK DONE:
+Handed over the complete project files to the team. Wrote down a few small ideas about what diseases they could add next. Officially concluded my internship duties and signed off the final clearance paperwork.
+-----------------------------------------------------------
+
+INDUSTRY-BASED SUPERVISOR'S COMMENT: ____________________
+SIGNATURE & DATE: _______________________________________
+
+

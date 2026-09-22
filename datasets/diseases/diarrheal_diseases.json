@@ -1,0 +1,475 @@
+{
+  "name": "Diarrheal Diseases",
+  "remarks": [
+    "Nigerian Diarrheal Diseases Acute Module.",
+    "Incidence modelled from NDHS 2018.",
+    "Age-stratified (U5s have highest risk). Distinguishes mild, moderate, severe dehydration, and Cholera."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Annual_Exposure_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.80,
+              "transition": "Diarrhea_Onset"
+            },
+            {
+              "distribution": 0.20,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "distribution": 0.20,
+          "transition": "Diarrhea_Onset"
+        },
+        {
+          "distribution": 0.80,
+          "transition": "Annual_Exposure_Evaluation"
+        }
+      ]
+    },
+    "Diarrhea_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "19653000",
+          "display": "Acute diarrhea"
+        }
+      ],
+      "direct_transition": "Severity_Evaluation"
+    },
+    "Severity_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.80,
+          "transition": "Mild_Symptoms"
+        },
+        {
+          "distribution": 0.15,
+          "transition": "Moderate_Symptoms"
+        },
+        {
+          "distribution": 0.04,
+          "transition": "Severe_Symptoms"
+        },
+        {
+          "distribution": 0.01,
+          "transition": "Cholera_Onset"
+        }
+      ]
+    },
+    "Mild_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Diarrhea",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Mild_Encounter"
+    },
+    "Mild_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up"
+        }
+      ],
+      "direct_transition": "Mild_Treatment"
+    },
+    "Mild_Treatment": {
+      "type": "CarePlanStart",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "22695004",
+          "display": "Oral rehydration therapy"
+        }
+      ],
+      "direct_transition": "Zinc_Check"
+    },
+    "Zinc_Check": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 1.0,
+              "transition": "Zinc_Order"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Mild_Recovery_Delay"
+    },
+    "Zinc_Order": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1311096",
+          "display": "Zinc"
+        }
+      ],
+      "direct_transition": "Mild_Recovery_Delay"
+    },
+    "Mild_Recovery_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 3,
+        "high": 5,
+        "unit": "days"
+      },
+      "direct_transition": "Mild_End"
+    },
+    "Mild_End": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "19653000",
+          "display": "Acute diarrhea"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Moderate_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Diarrhea",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Moderate_Encounter"
+    },
+    "Moderate_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up"
+        }
+      ],
+      "direct_transition": "Moderate_Diagnosis"
+    },
+    "Moderate_Diagnosis": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "2609003",
+          "display": "Mild dehydration"
+        }
+      ],
+      "direct_transition": "Moderate_Treatment"
+    },
+    "Moderate_Treatment": {
+      "type": "CarePlanStart",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "22695004",
+          "display": "Oral rehydration therapy"
+        }
+      ],
+      "direct_transition": "Moderate_Zinc_Check"
+    },
+    "Moderate_Zinc_Check": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 1.0,
+              "transition": "Moderate_Zinc_Order"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Moderate_Recovery_Delay"
+    },
+    "Moderate_Zinc_Order": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1311096",
+          "display": "Zinc"
+        }
+      ],
+      "direct_transition": "Moderate_Recovery_Delay"
+    },
+    "Moderate_Recovery_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 5,
+        "high": 7,
+        "unit": "days"
+      },
+      "direct_transition": "Moderate_End_Dehydration"
+    },
+    "Moderate_End_Dehydration": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "2609003",
+          "display": "Mild dehydration"
+        }
+      ],
+      "direct_transition": "Moderate_End"
+    },
+    "Moderate_End": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "19653000",
+          "display": "Acute diarrhea"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Severe_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Diarrhea",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Severe_Encounter"
+    },
+    "Severe_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "Severe_Dehydration_Diagnosis"
+    },
+    "Severe_Dehydration_Diagnosis": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "44142007",
+          "display": "Severe dehydration"
+        }
+      ],
+      "direct_transition": "IV_Fluids"
+    },
+    "IV_Fluids": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1049221",
+          "display": "Intravenous fluid"
+        }
+      ],
+      "direct_transition": "Severe_Outcome"
+    },
+    "Severe_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.95,
+          "transition": "Severe_Recovery"
+        },
+        {
+          "distribution": 0.05,
+          "transition": "Severe_Death"
+        }
+      ]
+    },
+    "Severe_Recovery": {
+      "type": "Delay",
+      "range": {
+        "low": 3,
+        "high": 5,
+        "unit": "days"
+      },
+      "direct_transition": "End_Severe_Dehydration"
+    },
+    "End_Severe_Dehydration": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "44142007",
+          "display": "Severe dehydration"
+        }
+      ],
+      "direct_transition": "End_Severe_Diarrhea"
+    },
+    "End_Severe_Diarrhea": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "19653000",
+          "display": "Acute diarrhea"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Severe_Death": {
+      "type": "Death",
+      "condition_onset": "Severe dehydration",
+      "direct_transition": "Terminal"
+    },
+    "Cholera_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "63650001",
+          "display": "Cholera"
+        }
+      ],
+      "direct_transition": "Cholera_Encounter"
+    },
+    "Cholera_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "Cholera_Dehydration"
+    },
+    "Cholera_Dehydration": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "44142007",
+          "display": "Severe dehydration"
+        }
+      ],
+      "direct_transition": "Cholera_IV_Fluids"
+    },
+    "Cholera_IV_Fluids": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1049221",
+          "display": "Intravenous fluid"
+        }
+      ],
+      "direct_transition": "Cholera_Antibiotic"
+    },
+    "Cholera_Antibiotic": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "3640",
+          "display": "Doxycycline"
+        }
+      ],
+      "direct_transition": "Cholera_Outcome"
+    },
+    "Cholera_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.90,
+          "transition": "Cholera_Recovery"
+        },
+        {
+          "distribution": 0.10,
+          "transition": "Cholera_Death"
+        }
+      ]
+    },
+    "Cholera_Recovery": {
+      "type": "Delay",
+      "range": {
+        "low": 5,
+        "high": 7,
+        "unit": "days"
+      },
+      "direct_transition": "End_Cholera_Dehydration"
+    },
+    "End_Cholera_Dehydration": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "44142007",
+          "display": "Severe dehydration"
+        }
+      ],
+      "direct_transition": "End_Cholera"
+    },
+    "End_Cholera": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "63650001",
+          "display": "Cholera"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Cholera_Death": {
+      "type": "Death",
+      "condition_onset": "Cholera",
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

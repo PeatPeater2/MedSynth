@@ -1,0 +1,181 @@
+{
+  "name": "Neonatal Disorders",
+  "remarks": [
+    "Nigerian Neonatal Disorders Module.",
+    "Incidence modelled from NDHS 2018 and UNICEF 2021.",
+    "Covers Prematurity, Neonatal Sepsis, and Birth Asphyxia."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Age_Verification"
+    },
+    "Age_Verification": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": { "condition_type": "Age", "operator": "<=", "quantity": 28, "unit": "days" },
+          "distributions": [
+            { "distribution": 1.0, "transition": "Risk_Evaluation" }
+          ]
+        }
+      ],
+      "fallback_transition": "Terminal"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        { "distribution": 0.12, "transition": "Prematurity_Branch" },
+        { "distribution": 0.015, "transition": "Sepsis_Branch" },
+        { "distribution": 0.015, "transition": "Asphyxia_Branch" },
+        { "distribution": 0.85, "transition": "Healthy_Neonatal_Period" }
+      ]
+    },
+    "Healthy_Neonatal_Period": {
+      "type": "Delay",
+      "exact": { "quantity": 28, "unit": "days" },
+      "direct_transition": "Terminal"
+    },
+    
+    "Prematurity_Branch": {
+      "type": "ConditionOnset",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "281604008", "display": "Premature birth of newborn" }
+      ],
+      "direct_transition": "NICU_Encounter_Prematurity"
+    },
+    "NICU_Encounter_Prematurity": {
+      "type": "Encounter",
+      "encounter_class": "inpatient",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "32485007", "display": "Hospital admission" }
+      ],
+      "direct_transition": "Prematurity_Outcome_Evaluation"
+    },
+    "Prematurity_Outcome_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        { "distribution": 0.90, "transition": "Prematurity_Care_Delay" },
+        { "distribution": 0.10, "transition": "Prematurity_Death" }
+      ]
+    },
+    "Prematurity_Care_Delay": {
+      "type": "Delay",
+      "exact": { "quantity": 28, "unit": "days" },
+      "direct_transition": "Terminal"
+    },
+    "Prematurity_Death": {
+      "type": "Death",
+      "condition_onset": "Premature birth of newborn",
+      "direct_transition": "Terminal"
+    },
+    
+    "Sepsis_Branch": {
+      "type": "ConditionOnset",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "276505008", "display": "Neonatal sepsis" }
+      ],
+      "direct_transition": "NICU_Encounter_Sepsis"
+    },
+    "NICU_Encounter_Sepsis": {
+      "type": "Encounter",
+      "encounter_class": "inpatient",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "32485007", "display": "Hospital admission" }
+      ],
+      "direct_transition": "Sepsis_Diagnosis"
+    },
+    "Sepsis_Diagnosis": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        { "system": "LOINC", "code": "600-7", "display": "Bacteria identified in Blood by Culture" }
+      ],
+      "exact": { "quantity": 1 },
+      "direct_transition": "Sepsis_Treatment"
+    },
+    "Sepsis_Treatment": {
+      "type": "MedicationOrder",
+      "codes": [
+        { "system": "RxNorm", "code": "733", "display": "Ampicillin" }
+      ],
+      "direct_transition": "Sepsis_Outcome"
+    },
+    "Sepsis_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        { "distribution": 0.85, "transition": "Sepsis_Delay" },
+        { "distribution": 0.15, "transition": "Sepsis_Death" }
+      ]
+    },
+    "Sepsis_Delay": {
+      "type": "Delay",
+      "exact": { "quantity": 14, "unit": "days" },
+      "direct_transition": "End_Sepsis"
+    },
+    "End_Sepsis": {
+      "type": "ConditionEnd",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "276505008", "display": "Neonatal sepsis" }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Sepsis_Death": {
+      "type": "Death",
+      "condition_onset": "Neonatal sepsis",
+      "direct_transition": "Terminal"
+    },
+    
+    "Asphyxia_Branch": {
+      "type": "ConditionOnset",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "4190005", "display": "Birth asphyxia" }
+      ],
+      "direct_transition": "NICU_Encounter_Asphyxia"
+    },
+    "NICU_Encounter_Asphyxia": {
+      "type": "Encounter",
+      "encounter_class": "inpatient",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "32485007", "display": "Hospital admission" }
+      ],
+      "direct_transition": "Asphyxia_Resuscitation"
+    },
+    "Asphyxia_Resuscitation": {
+      "type": "CarePlanStart",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "3130004", "display": "Neonatal resuscitation" }
+      ],
+      "direct_transition": "Asphyxia_Outcome"
+    },
+    "Asphyxia_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        { "distribution": 0.70, "transition": "Asphyxia_Recovery_Delay" },
+        { "distribution": 0.30, "transition": "Asphyxia_Death" }
+      ]
+    },
+    "Asphyxia_Recovery_Delay": {
+      "type": "Delay",
+      "exact": { "quantity": 7, "unit": "days" },
+      "direct_transition": "End_Asphyxia"
+    },
+    "End_Asphyxia": {
+      "type": "ConditionEnd",
+      "codes": [
+        { "system": "SNOMED-CT", "code": "4190005", "display": "Birth asphyxia" }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Asphyxia_Death": {
+      "type": "Death",
+      "condition_onset": "Birth asphyxia",
+      "direct_transition": "Terminal"
+    },
+    
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}
+

@@ -1,0 +1,121 @@
+{
+  "name": "Annual Checkup",
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Wait_A_Year"
+    },
+    "Wait_A_Year": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Check_Age"
+    },
+    "Check_Age": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 100,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.5,
+              "transition": "Wellness_Encounter"
+            },
+            {
+              "distribution": 0.5,
+              "transition": "Wait_A_Year"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Terminal"
+    },
+    "Wellness_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "162673000",
+          "display": "General examination of patient"
+        }
+      ],
+      "direct_transition": "Obs_Height"
+    },
+    "Obs_Height": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "vital_sign": "height",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "8302-2",
+          "display": "Body height"
+        }
+      ],
+      "direct_transition": "Obs_Weight"
+    },
+    "Obs_Weight": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "vital_sign": "weight",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "29463-7",
+          "display": "Body weight"
+        }
+      ],
+      "direct_transition": "Obs_BMI"
+    },
+    "Obs_BMI": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "vital_sign": "bmi",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "39156-5",
+          "display": "Body mass index (BMI) [Ratio]"
+        }
+      ],
+      "direct_transition": "Obs_Systolic"
+    },
+    "Obs_Systolic": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "vital_sign": "systolic_bp",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "8480-6",
+          "display": "Systolic blood pressure"
+        }
+      ],
+      "direct_transition": "Obs_Diastolic"
+    },
+    "Obs_Diastolic": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "vital_sign": "diastolic_bp",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "8462-4",
+          "display": "Diastolic blood pressure"
+        }
+      ],
+      "direct_transition": "Wait_A_Year"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

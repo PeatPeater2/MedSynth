@@ -1,0 +1,233 @@
+{
+  "name": "Ischemic Heart Disease",
+  "remarks": [
+    "Nigerian IHD/MI Module.",
+    "Models stable IHD with annual risk of Acute Myocardial Infarction.",
+    "Hypertension and diabetes are unmodeled due to architectural limitations."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Annual_Exposure_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 40,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 1.0,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": ">=",
+            "quantity": 65,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.02,
+              "transition": "IHD_Onset"
+            },
+            {
+              "distribution": 0.98,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "distribution": 0.005,
+          "transition": "IHD_Onset"
+        },
+        {
+          "distribution": 0.995,
+          "transition": "Annual_Exposure_Evaluation"
+        }
+      ]
+    },
+    "IHD_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "414545008",
+          "display": "Ischemic heart disease"
+        }
+      ],
+      "direct_transition": "Stable_IHD_Encounter"
+    },
+    "Stable_IHD_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up"
+        }
+      ],
+      "direct_transition": "Stable_IHD_Treatment"
+    },
+    "Stable_IHD_Treatment": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1191",
+          "display": "Aspirin"
+        }
+      ],
+      "direct_transition": "Stable_IHD_Treatment_2"
+    },
+    "Stable_IHD_Treatment_2": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "83367",
+          "display": "Atorvastatin"
+        }
+      ],
+      "direct_transition": "Chronic_IHD_Loop"
+    },
+    "Chronic_IHD_Loop": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Acute_Event_Evaluation"
+    },
+    "Acute_Event_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.03,
+          "transition": "AMI_Onset"
+        },
+        {
+          "distribution": 0.97,
+          "transition": "Chronic_IHD_Loop"
+        }
+      ]
+    },
+    "AMI_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "22298006",
+          "display": "Myocardial infarction"
+        }
+      ],
+      "direct_transition": "AMI_Symptoms"
+    },
+    "AMI_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Chest pain",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Emergency_Encounter"
+    },
+    "Emergency_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "ECG_Procedure"
+    },
+    "ECG_Procedure": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "29303009",
+          "display": "Electrocardiogram"
+        }
+      ],
+      "direct_transition": "Troponin_Observation"
+    },
+    "Troponin_Observation": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "10839-9",
+          "display": "Troponin I"
+        }
+      ],
+      "exact": {
+        "quantity": 1
+      },
+      "direct_transition": "AMI_Outcome"
+    },
+    "AMI_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.081,
+          "transition": "AMI_Death"
+        },
+        {
+          "distribution": 0.919,
+          "transition": "AMI_Survival_Delay"
+        }
+      ]
+    },
+    "AMI_Death": {
+      "type": "Death",
+      "condition_onset": "Myocardial infarction",
+      "direct_transition": "Terminal"
+    },
+    "AMI_Survival_Delay": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 7,
+        "unit": "days"
+      },
+      "direct_transition": "End_AMI"
+    },
+    "End_AMI": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "22298006",
+          "display": "Myocardial infarction"
+        }
+      ],
+      "direct_transition": "Chronic_IHD_Loop"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

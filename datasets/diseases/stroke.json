@@ -1,0 +1,272 @@
+{
+  "name": "Stroke",
+  "remarks": [
+    "Nigerian Stroke Module.",
+    "Incidence and subtypes modelled from literature. Hypertension and diabetes are unmodeled.",
+    "Age-stratified (Rare < 40, increasing with age). Distinguishes Ischemic and Hemorrhagic."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Annual_Exposure_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 40,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.0001,
+              "transition": "Stroke_Onset"
+            },
+            {
+              "distribution": 0.9999,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": ">=",
+            "quantity": 65,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.008,
+              "transition": "Stroke_Onset"
+            },
+            {
+              "distribution": 0.992,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "distribution": 0.0015,
+          "transition": "Stroke_Onset"
+        },
+        {
+          "distribution": 0.9985,
+          "transition": "Annual_Exposure_Evaluation"
+        }
+      ]
+    },
+    "Stroke_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "230690007",
+          "display": "Cerebrovascular accident"
+        }
+      ],
+      "direct_transition": "Stroke_Symptoms"
+    },
+    "Stroke_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Sudden weakness",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Emergency_Encounter"
+    },
+    "Emergency_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "CT_Scan"
+    },
+    "CT_Scan": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "418196008",
+          "display": "Computed tomography of head"
+        }
+      ],
+      "direct_transition": "Subtype_Evaluation"
+    },
+    "Subtype_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.75,
+          "transition": "Ischemic_Pathway"
+        },
+        {
+          "distribution": 0.25,
+          "transition": "Hemorrhagic_Pathway"
+        }
+      ]
+    },
+    "Ischemic_Pathway": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "422504002",
+          "display": "Ischemic stroke"
+        }
+      ],
+      "direct_transition": "Ischemic_Treatment"
+    },
+    "Ischemic_Treatment": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1191",
+          "display": "Aspirin"
+        }
+      ],
+      "direct_transition": "Ischemic_Outcome"
+    },
+    "Ischemic_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.30,
+          "transition": "Ischemic_Death"
+        },
+        {
+          "distribution": 0.70,
+          "transition": "Ischemic_Survival_Delay"
+        }
+      ]
+    },
+    "Ischemic_Survival_Delay": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 30,
+        "unit": "days"
+      },
+      "direct_transition": "End_Acute_Ischemic"
+    },
+    "End_Acute_Ischemic": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "422504002",
+          "display": "Ischemic stroke"
+        }
+      ],
+      "direct_transition": "Stroke_Rehab"
+    },
+    "Ischemic_Death": {
+      "type": "Death",
+      "condition_onset": "Ischemic stroke",
+      "direct_transition": "Terminal"
+    },
+    "Hemorrhagic_Pathway": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "274100004",
+          "display": "Hemorrhagic stroke"
+        }
+      ],
+      "direct_transition": "Hemorrhagic_Treatment"
+    },
+    "Hemorrhagic_Treatment": {
+      "type": "CarePlanStart",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "385807000",
+          "display": "Stroke management"
+        }
+      ],
+      "direct_transition": "Hemorrhagic_Outcome"
+    },
+    "Hemorrhagic_Outcome": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.45,
+          "transition": "Hemorrhagic_Death"
+        },
+        {
+          "distribution": 0.55,
+          "transition": "Hemorrhagic_Survival_Delay"
+        }
+      ]
+    },
+    "Hemorrhagic_Survival_Delay": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 30,
+        "unit": "days"
+      },
+      "direct_transition": "End_Acute_Hemorrhagic"
+    },
+    "End_Acute_Hemorrhagic": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "274100004",
+          "display": "Hemorrhagic stroke"
+        }
+      ],
+      "direct_transition": "Stroke_Rehab"
+    },
+    "Hemorrhagic_Death": {
+      "type": "Death",
+      "condition_onset": "Hemorrhagic stroke",
+      "direct_transition": "Terminal"
+    },
+    "Stroke_Rehab": {
+      "type": "CarePlanStart",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "386280000",
+          "display": "Physical therapy procedure"
+        }
+      ],
+      "direct_transition": "End_Stroke"
+    },
+    "End_Stroke": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "230690007",
+          "display": "Cerebrovascular accident"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

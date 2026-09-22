@@ -1,0 +1,244 @@
+{
+  "name": "HIV/AIDS",
+  "remarks": [
+    "Nigerian HIV/AIDS Chronic Module.",
+    "Incidence modelled from UNAIDS 2022 and NAIIS 2018.",
+    "Female bias modeled for adults. Includes chronic monitoring loop and AIDS progression."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Annual_Exposure_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "And",
+            "conditions": [
+              {
+                "condition_type": "Gender",
+                "gender": "F"
+              },
+              {
+                "condition_type": "Age",
+                "operator": ">=",
+                "quantity": 15,
+                "unit": "years"
+              }
+            ]
+          },
+          "distributions": [
+            {
+              "distribution": 0.0004,
+              "transition": "HIV_Infection"
+            },
+            {
+              "distribution": 0.9996,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "And",
+            "conditions": [
+              {
+                "condition_type": "Gender",
+                "gender": "M"
+              },
+              {
+                "condition_type": "Age",
+                "operator": ">=",
+                "quantity": 15,
+                "unit": "years"
+              }
+            ]
+          },
+          "distributions": [
+            {
+              "distribution": 0.0002,
+              "transition": "HIV_Infection"
+            },
+            {
+              "distribution": 0.9998,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 15,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.00005,
+              "transition": "HIV_Infection"
+            },
+            {
+              "distribution": 0.99995,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Annual_Exposure_Evaluation"
+    },
+    "HIV_Infection": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "86406008",
+          "display": "Human immunodeficiency virus infection"
+        }
+      ],
+      "direct_transition": "Set_HIV_Flag"
+    },
+    "Set_HIV_Flag": {
+      "type": "SetAttribute",
+      "attribute": "hiv_positive",
+      "value": true,
+      "direct_transition": "Undiagnosed_Phase"
+    },
+    "Undiagnosed_Phase": {
+      "type": "Delay",
+      "range": {
+        "low": 1,
+        "high": 3,
+        "unit": "years"
+      },
+      "direct_transition": "HIV_Testing"
+    },
+    "HIV_Testing": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up"
+        }
+      ],
+      "direct_transition": "HIV_Rapid_Test"
+    },
+    "HIV_Rapid_Test": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "80231-4",
+          "display": "HIV 1+2 Ab Rapid Test"
+        }
+      ],
+      "exact": {
+        "quantity": 1
+      },
+      "direct_transition": "Care_Entry"
+    },
+    "Care_Entry": {
+      "type": "CarePlanStart",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "385966005",
+          "display": "HIV care program"
+        }
+      ],
+      "direct_transition": "ART_Initiation"
+    },
+    "ART_Initiation": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "2123111",
+          "display": "Dolutegravir / Lamivudine / Tenofovir disoproxil fumarate"
+        }
+      ],
+      "direct_transition": "Monitoring_Loop"
+    },
+    "Monitoring_Loop": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 6,
+        "unit": "months"
+      },
+      "direct_transition": "Viral_Load_Test"
+    },
+    "Viral_Load_Test": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "25835-1",
+          "display": "HIV 1 RNA quantitative"
+        }
+      ],
+      "range": {
+        "low": 0,
+        "high": 100000
+      },
+      "direct_transition": "ART_Adherence_Eval"
+    },
+    "ART_Adherence_Eval": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.89,
+          "transition": "Monitoring_Loop"
+        },
+        {
+          "distribution": 0.10,
+          "transition": "Monitoring_Loop"
+        },
+        {
+          "distribution": 0.01,
+          "transition": "AIDS_Onset"
+        }
+      ]
+    },
+    "AIDS_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "62479008",
+          "display": "Acquired immune deficiency syndrome"
+        }
+      ],
+      "direct_transition": "AIDS_Delay"
+    },
+    "AIDS_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 1,
+        "high": 3,
+        "unit": "years"
+      },
+      "direct_transition": "AIDS_Mortality"
+    },
+    "AIDS_Mortality": {
+      "type": "Death",
+      "condition_onset": "Acquired immune deficiency syndrome",
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

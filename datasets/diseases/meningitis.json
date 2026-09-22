@@ -1,0 +1,358 @@
+{
+  "name": "Meningitis",
+  "remarks": [
+    "Modelled for Nigeria using NCDC and WHO outbreak epidemiology.",
+    "Focused on Bacterial Meningitis in the Meningitis Belt (Northern states).",
+    "CFR modelled at 8.5%."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Check_Meningitis_Belt"
+    },
+    "Check_Meningitis_Belt": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Or",
+            "conditions": [
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Sokoto"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Kano"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Zamfara"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Katsina"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Kebbi"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Jigawa"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Yobe"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Borno"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Bauchi"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Gombe"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Adamawa"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Taraba"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Niger"
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "state",
+                "operator": "==",
+                "value": "Federal Capital Territory"
+              }
+            ]
+          },
+          "distributions": [
+            {
+              "distribution": 0.0,
+              "transition": "Meningitis_Belt_Exposure"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Non_Belt_Exposure"
+    },
+    "Meningitis_Belt_Exposure": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "months"
+      },
+      "direct_transition": "Belt_Risk_Evaluation"
+    },
+    "Belt_Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<=",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.0001,
+              "transition": "Meningitis_Onset"
+            },
+            {
+              "distribution": 0.9999,
+              "transition": "Meningitis_Belt_Exposure"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<=",
+            "quantity": 25,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 5e-05,
+              "transition": "Meningitis_Onset"
+            },
+            {
+              "distribution": 0.99995,
+              "transition": "Meningitis_Belt_Exposure"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Belt_Adult_Risk"
+    },
+    "Belt_Adult_Risk": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 1e-05,
+          "transition": "Meningitis_Onset"
+        },
+        {
+          "distribution": 0.99999,
+          "transition": "Meningitis_Belt_Exposure"
+        }
+      ]
+    },
+    "Non_Belt_Exposure": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "months"
+      },
+      "direct_transition": "Non_Belt_Risk_Evaluation"
+    },
+    "Non_Belt_Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<=",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 1e-05,
+              "transition": "Meningitis_Onset"
+            },
+            {
+              "distribution": 0.99999,
+              "transition": "Non_Belt_Exposure"
+            }
+          ]
+        }
+      ],
+      "fallback_transition": "Non_Belt_Adult_Risk"
+    },
+    "Non_Belt_Adult_Risk": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 2e-06,
+          "transition": "Meningitis_Onset"
+        },
+        {
+          "distribution": 0.999998,
+          "transition": "Non_Belt_Exposure"
+        }
+      ]
+    },
+    "Meningitis_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "7180009",
+          "display": "Meningitis (disorder)"
+        }
+      ],
+      "direct_transition": "Meningitis_Symptoms"
+    },
+    "Meningitis_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Fever",
+      "probability": 1.0,
+      "direct_transition": "Meningitis_Symptoms_2"
+    },
+    "Meningitis_Symptoms_2": {
+      "type": "Symptom",
+      "symptom": "Headache",
+      "probability": 1.0,
+      "direct_transition": "Meningitis_Symptoms_3"
+    },
+    "Meningitis_Symptoms_3": {
+      "type": "Symptom",
+      "symptom": "Neck stiffness",
+      "probability": 1.0,
+      "direct_transition": "Emergency_Encounter"
+    },
+    "Emergency_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "Lumbar_Puncture"
+    },
+    "Lumbar_Puncture": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "277261001",
+          "display": "Lumbar puncture"
+        }
+      ],
+      "direct_transition": "CSF_Analysis"
+    },
+    "CSF_Analysis": {
+      "type": "Observation",
+      "category": "laboratory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "1113008",
+          "display": "Cerebrospinal fluid analysis"
+        }
+      ],
+      "direct_transition": "Empiric_Antibiotics"
+    },
+    "Empiric_Antibiotics": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "2060010",
+          "display": "Ceftriaxone 1000 MG Injection"
+        }
+      ],
+      "direct_transition": "Meningitis_Outcome_Delay"
+    },
+    "Meningitis_Outcome_Delay": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 7,
+        "unit": "days"
+      },
+      "direct_transition": "Meningitis_Outcome_Branch"
+    },
+    "Meningitis_Outcome_Branch": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.085,
+          "transition": "Meningitis_Death"
+        },
+        {
+          "distribution": 0.1,
+          "transition": "Complication_HearingLoss"
+        },
+        {
+          "distribution": 0.815,
+          "transition": "Recovery_Transition"
+        }
+      ]
+    },
+    "Meningitis_Death": {
+      "type": "Death",
+      "condition_onset": "Meningitis_Onset",
+      "direct_transition": "Terminal"
+    },
+    "Complication_HearingLoss": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "60700002",
+          "display": "Sensorineural hearing loss (disorder)"
+        }
+      ],
+      "direct_transition": "Recovery_Transition"
+    },
+    "Recovery_Transition": {
+      "type": "ConditionEnd",
+      "condition_onset": "Meningitis_Onset",
+      "direct_transition": "Medication_End"
+    },
+    "Medication_End": {
+      "type": "MedicationEnd",
+      "medication_order": "Empiric_Antibiotics",
+      "direct_transition": "Encounter_End"
+    },
+    "Encounter_End": {
+      "type": "EncounterEnd",
+      "direct_transition": "Initial"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

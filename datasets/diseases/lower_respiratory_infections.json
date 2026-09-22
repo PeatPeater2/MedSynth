@@ -1,0 +1,322 @@
+{
+  "name": "Lower Respiratory Infections",
+  "remarks": [
+    "Nigerian LRI Acute Module.",
+    "Incidence modelled from WHO/UNICEF data.",
+    "Age-stratified (U5s have highest risk). HIV interaction included."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Annual_Exposure_Evaluation": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 1,
+        "unit": "years"
+      },
+      "direct_transition": "Risk_Evaluation"
+    },
+    "Risk_Evaluation": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "hiv_positive",
+            "operator": "==",
+            "value": true
+          },
+          "distributions": [
+            {
+              "distribution": 0.25,
+              "transition": "LRI_Onset"
+            },
+            {
+              "distribution": 0.75,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 5,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.20,
+              "transition": "LRI_Onset"
+            },
+            {
+              "distribution": 0.80,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": ">=",
+            "quantity": 65,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.10,
+              "transition": "LRI_Onset"
+            },
+            {
+              "distribution": 0.90,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        },
+        {
+          "condition": {
+            "condition_type": "Age",
+            "operator": "<",
+            "quantity": 15,
+            "unit": "years"
+          },
+          "distributions": [
+            {
+              "distribution": 0.05,
+              "transition": "LRI_Onset"
+            },
+            {
+              "distribution": 0.95,
+              "transition": "Annual_Exposure_Evaluation"
+            }
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "distribution": 0.03,
+          "transition": "LRI_Onset"
+        },
+        {
+          "distribution": 0.97,
+          "transition": "Annual_Exposure_Evaluation"
+        }
+      ]
+    },
+    "LRI_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50417007",
+          "display": "Lower respiratory tract infection"
+        }
+      ],
+      "direct_transition": "Severity_Evaluation"
+    },
+    "Severity_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.80,
+          "transition": "Mild_Symptoms"
+        },
+        {
+          "distribution": 0.20,
+          "transition": "Severe_Symptoms"
+        }
+      ]
+    },
+    "Mild_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Cough",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Mild_Encounter"
+    },
+    "Mild_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185349003",
+          "display": "Encounter for check up"
+        }
+      ],
+      "direct_transition": "Mild_Diagnosis"
+    },
+    "Mild_Diagnosis": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "9279-1",
+          "display": "Respiratory rate"
+        }
+      ],
+      "range": {
+        "low": 20,
+        "high": 30
+      },
+      "direct_transition": "Mild_Supportive_Care"
+    },
+    "Mild_Supportive_Care": {
+      "type": "CarePlanStart",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "395082007",
+          "display": "Supportive care"
+        }
+      ],
+      "direct_transition": "Mild_Recovery_Delay"
+    },
+    "Mild_Recovery_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 1,
+        "high": 2,
+        "unit": "weeks"
+      },
+      "direct_transition": "Mild_Condition_End"
+    },
+    "Mild_Condition_End": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50417007",
+          "display": "Lower respiratory tract infection"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "Severe_Symptoms": {
+      "type": "Symptom",
+      "symptom": "Difficulty breathing",
+      "probability": 1.0,
+      "exact": {
+        "quantity": 100
+      },
+      "direct_transition": "Severe_Encounter"
+    },
+    "Severe_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "emergency",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50849002",
+          "display": "Emergency room admission"
+        }
+      ],
+      "direct_transition": "Severe_Diagnosis"
+    },
+    "Severe_Diagnosis": {
+      "type": "Observation",
+      "category": "imaging",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "36643-5",
+          "display": "Chest X-ray"
+        }
+      ],
+      "exact": {
+        "quantity": 1
+      },
+      "direct_transition": "Severe_Bacterial_Onset"
+    },
+    "Severe_Bacterial_Onset": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "53084003",
+          "display": "Bacterial pneumonia"
+        }
+      ],
+      "direct_transition": "Antibiotic_Order"
+    },
+    "Antibiotic_Order": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "723",
+          "display": "Amoxicillin"
+        }
+      ],
+      "direct_transition": "Severe_Outcome_Evaluation"
+    },
+    "Severe_Outcome_Evaluation": {
+      "type": "Simple",
+      "distributed_transition": [
+        {
+          "distribution": 0.95,
+          "transition": "Severe_Treatment_Delay"
+        },
+        {
+          "distribution": 0.05,
+          "transition": "LRI_Death"
+        }
+      ]
+    },
+    "Severe_Treatment_Delay": {
+      "type": "Delay",
+      "range": {
+        "low": 1,
+        "high": 2,
+        "unit": "weeks"
+      },
+      "direct_transition": "Antibiotic_End"
+    },
+    "Antibiotic_End": {
+      "type": "MedicationEnd",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "723",
+          "display": "Amoxicillin"
+        }
+      ],
+      "direct_transition": "End_Pneumonia"
+    },
+    "End_Pneumonia": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "53084003",
+          "display": "Bacterial pneumonia"
+        }
+      ],
+      "direct_transition": "End_LRI"
+    },
+    "End_LRI": {
+      "type": "ConditionEnd",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "50417007",
+          "display": "Lower respiratory tract infection"
+        }
+      ],
+      "direct_transition": "Annual_Exposure_Evaluation"
+    },
+    "LRI_Death": {
+      "type": "Death",
+      "condition_onset": "Bacterial pneumonia",
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}

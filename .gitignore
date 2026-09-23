@@ -26,6 +26,13 @@ docs/medsynth_viva_guide.md
 docs/supervisor_defense_guide.md
 docs/medsynth_python_100_questions.md
 docs/medsynth_project_150_questions.md
+docs/python_used_in_medsynth.md
+docs/medsynth_internal_guide.md
 
-# Testing/Temp
+# Testing/Temp/Scrap
 tests/testingmycode.py
+*.txt
+!requirements.txt
+
+# Scripts
+datasets/geography/fetch_geo.py

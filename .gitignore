@@ -14,3 +14,18 @@ logic_output.txt
 env/
 venv/
 ENV/
+
+# Personal / SIWES Files
+SIWES_Daily_Logbook.txt
+rest_of_logbook.txt
+build_logbook*.py
+
+# Defense and Q&A Guides
+docs/medsynth_viva_answer_guide.md
+docs/medsynth_viva_guide.md
+docs/supervisor_defense_guide.md
+docs/medsynth_python_100_questions.md
+docs/medsynth_project_150_questions.md
+
+# Testing/Temp
+tests/testingmycode.py

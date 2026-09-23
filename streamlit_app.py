@@ -359,7 +359,7 @@ def render_generate():
             opts.target_sex = "F"
             
         diseases = get_available_diseases()
-        target_diseases = selected_diseases if len(selected_diseases) > 0 else 'all'
+        target_diseases = ",".join(selected_diseases) if len(selected_diseases) > 0 else 'all'
         try:
             generator = setup_generator(opts, target_diseases, diseases)
         except Exception as e:
